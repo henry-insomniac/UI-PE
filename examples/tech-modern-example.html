@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代科技风示例 - AI 代码助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #ffffff;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a0b2e 100%);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .blur-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .blur-circle-1 {
+            width: 400px;
+            height: 400px;
+            background: #00d4ff;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .blur-circle-2 {
+            width: 500px;
+            height: 500px;
+            background: #0099ff;
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .blur-circle-3 {
+            width: 300px;
+            height: 300px;
+            background: #667eea;
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 80px;
+            padding: 100px 24px;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            color: #ffffff;
+            padding: 16px 48px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.8);
+        }
+
+        /* Code Demo */
+        .code-demo {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-demo pre {
+            color: #00d4ff;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 24px;
+            position: relative;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            margin-top: 60px;
+        }
+
+        .stat-item h3 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .features-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="blur-circle blur-circle-1"></div>
+        <div class="blur-circle blur-circle-2"></div>
+        <div class="blur-circle blur-circle-3"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container" style="grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+            <div>
+                <h1>AI 驱动的<br>智能代码助手</h1>
+                <p class="subtitle">让 AI 成为你的编程伙伴，提升 5 倍开发效率。支持 50+ 编程语言，实时代码补全和智能重构。</p>
+                <a href="#" class="cta-button">开始免费试用 →</a>
+            </div>
+            <div class="code-demo">
+                <pre>
+<span style="color: #667eea;">function</span> <span style="color: #fff;">generateCode</span>() {
+  <span style="color: #10b981;">// AI 自动补全中...</span>
+  <span style="color: #667eea;">const</span> result = <span style="color: #00d4ff;">aiAssist</span>({
+    language: <span style="color: #fbbf24;">'JavaScript'</span>,
+    context: <span style="color: #fbbf24;">'React Component'</span>,
+    mode: <span style="color: #fbbf24;">'intelligent'</span>
+  });
+  
+  <span style="color: #667eea;">return</span> result.<span style="color: #00d4ff;">optimize</span>();
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 48px;">强大功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>智能代码补全</h3>
+                    <p>基于上下文的智能补全，准确率高达 95%</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Bug 检测</h3>
+                    <p>实时检测潜在错误，提前发现问题</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>代码重构</h3>
+                    <p>一键优化代码结构，提升可维护性</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <h2 style="font-size: 48px; margin-bottom: 0;">开发者信赖</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>100K+</h3>
+                    <p>活跃开发者</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>支持的语言</p>
+                </div>
+                <div class="stat-item">
+                    <h3>10M+</h3>
+                    <p>代码行数生成</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 80px 24px; position: relative;">
+        <div class="container">
+            <h2 style="font-size: 42px; margin-bottom: 24px;">准备好提升效率了吗？</h2>
+            <p class="subtitle" style="margin: 24px auto 48px;">免费试用 14 天，随时取消</p>
+            <a href="#" class="cta-button">立即开始 →</a>
+        </div>
+        <p style="margin-top: 80px; color: rgba(255,255,255,0.4); font-size: 14px;">现代科技风示例 - UI-PE 提示词工程库</p>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玻璃态风格示例 - 云存储服务</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1f2937;
+            background: linear-gradient(135deg, #dbeafe 0%, #ede9fe 50%, #fce7f3 100%);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Blur Circles Background */
+        .blur-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .blur-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .blur-circle-1 {
+            width: 500px;
+            height: 500px;
+            background: #3b82f6;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .blur-circle-2 {
+            width: 400px;
+            height: 400px;
+            background: #8b5cf6;
+            bottom: -50px;
+            right: 10%;
+            animation-delay: 7s;
+        }
+
+        .blur-circle-3 {
+            width: 350px;
+            height: 350px;
+            background: #ec4899;
+            top: 40%;
+            right: -100px;
+            animation-delay: 14s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            33% {
+                transform: translate(50px, -50px);
+            }
+            66% {
+                transform: translate(-30px, 30px);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glass Card Component */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 24px;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: #6b7280;
+            margin-bottom: 48px;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background: rgba(59, 130, 246, 0.9);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            padding: 16px 48px;
+            font-size: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+            background: rgba(59, 130, 246, 1);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 24px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #1f2937;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 120px 24px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 80px;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .pricing-card.featured {
+            background: rgba(59, 130, 246, 0.15);
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: translateY(-8px) scale(1.08);
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1f2937;
+        }
+
+        .plan-price {
+            font-size: 48px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 8px;
+        }
+
+        .plan-period {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .plan-features {
+            text-align: left;
+            margin-bottom: 32px;
+        }
+
+        .plan-features li {
+            list-style: none;
+            padding: 8px 0;
+            color: #6b7280;
+        }
+
+        .plan-features li:before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 24px;
+        }
+
+        .stats-container {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 60px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 42px;
+            }
+
+            .features-grid,
+            .pricing-grid,
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Blur Background -->
+    <div class="blur-background">
+        <div class="blur-circle blur-circle-1"></div>
+        <div class="blur-circle blur-circle-2"></div>
+        <div class="blur-circle blur-circle-3"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div style="max-width: 700px;">
+                <h1>安全优雅的<br>云存储体验</h1>
+                <p class="subtitle">
+                    CloudVault 为你的数据提供军事级加密保护，
+                    跨设备无缝同步，让文件管理变得轻松优雅
+                </p>
+                <a href="#" class="cta-button">免费试用 14 天</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <h3>5M+</h3>
+                    <p>活跃用户</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50PB</h3>
+                    <p>数据存储</p>
+                </div>
+                <div class="stat-item">
+                    <h3>99.9%</h3>
+                    <p>正常运行时间</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 48px; font-weight: 700; margin-bottom: 0;">核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>端到端加密</h3>
+                    <p>军事级 AES-256 加密，保护你的数据安全。只有你能访问自己的文件。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>跨设备同步</h3>
+                    <p>在手机、平板、电脑间无缝同步。任何地方，随时访问你的文件。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>智能文件管理</h3>
+                    <p>AI 驱动的智能分类和搜索，快速找到你需要的任何文件。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>团队协作</h3>
+                    <p>轻松分享文件夹，实时协作编辑，权限管理灵活安全。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 48px; font-weight: 700;">选择适合你的方案</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="plan-name">个人版</div>
+                    <div class="plan-price">¥0</div>
+                    <div class="plan-period">永久免费</div>
+                    <ul class="plan-features">
+                        <li>10 GB 存储空间</li>
+                        <li>最多 3 台设备</li>
+                        <li>基础文件共享</li>
+                        <li>7 天历史记录</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="width: 100%; text-align: center; background: rgba(107, 114, 128, 0.8);">开始使用</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="plan-name">专业版 ⭐</div>
+                    <div class="plan-price">¥29</div>
+                    <div class="plan-period">每月</div>
+                    <ul class="plan-features">
+                        <li>1 TB 存储空间</li>
+                        <li>无限设备</li>
+                        <li>高级协作功能</li>
+                        <li>30 天历史记录</li>
+                        <li>优先支持</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="width: 100%; text-align: center;">立即订阅</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="plan-name">团队版</div>
+                    <div class="plan-price">¥99</div>
+                    <div class="plan-period">每月 / 5 人起</div>
+                    <ul class="plan-features">
+                        <li>5 TB 共享空间</li>
+                        <li>团队管理面板</li>
+                        <li>高级权限控制</li>
+                        <li>90 天历史记录</li>
+                        <li>24/7 专属支持</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="width: 100%; text-align: center; background: rgba(107, 114, 128, 0.8);">联系销售</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer style="padding: 120px 24px; text-align: center;">
+        <div class="container">
+            <div class="glass-card" style="padding: 80px 40px; max-width: 800px; margin: 0 auto;">
+                <h2 style="font-size: 42px; font-weight: 700; margin-bottom: 24px;">
+                    开始你的云存储之旅
+                </h2>
+                <p style="font-size: 18px; color: #6b7280; margin-bottom: 40px;">
+                    14 天免费试用，无需信用卡，随时取消
+                </p>
+                <a href="#" class="cta-button" style="font-size: 20px; padding: 18px 56px;">免费开始</a>
+            </div>
+            <p style="margin-top: 60px; color: #9ca3af; font-size: 14px;">
+                玻璃态风格示例 - UI-PE 提示词工程库
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
+

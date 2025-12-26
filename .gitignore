@@ -1,0 +1,20 @@
+# 操作系统相关
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 临时文件
+*.tmp
+*.temp
+*.log
+
+# 用户自定义（不提交到版本库）
+/examples/drafts/
+/personal-notes.md
+

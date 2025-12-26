@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI-PE | UI Prompt Engineering</title>
+    <meta name="description" content="设计风格提示词工程库 - 帮助你更精准地向 AI 表达 UI 设计需求">
+    <meta property="og:title" content="UI-PE | UI Prompt Engineering">
+    <meta property="og:description" content="设计风格提示词工程库 - 帮助你更精准地向 AI 表达 UI 设计需求">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --gray-400: #888;
+            --gray-600: #555;
+            --accent: #8b5cf6;
+            --accent-soft: rgba(139, 92, 246, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Syne', -apple-system, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-links .github {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            color: var(--black);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .nav-links .github:hover {
+            opacity: 0.9;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 160px 48px 120px;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            width: fit-content;
+        }
+
+        h1 {
+            font-size: clamp(48px, 10vw, 120px);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 32px;
+        }
+
+        h1 .serif {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .hero-desc {
+            font-size: 20px;
+            color: var(--gray-400);
+            max-width: 600px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 999px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 32px rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Examples Section */
+        .examples {
+            padding: 120px 48px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .view-all {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+
+        /* Featured Grid */
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 40px;
+            text-decoration: none;
+            color: var(--white);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            border-color: #333;
+            transform: translateY(-4px);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .card h3 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--gray-400);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: auto;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            color: var(--gray-600);
+            padding: 6px 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+        }
+
+        /* Basic Grid */
+        .basic-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .basic-card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 28px;
+            text-decoration: none;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .basic-card:hover {
+            border-color: #333;
+            background: #151515;
+        }
+
+        .basic-card .icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .basic-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .basic-card p {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 48px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            margin-top: 64px;
+        }
+
+        .feature-item h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-item p {
+            color: var(--gray-400);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            color: var(--gray-600);
+            font-size: 14px;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-right a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-right a:hover {
+            color: var(--white);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            .basic-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav, .hero, .examples, .features {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .basic-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            footer {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .basic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <span class="logo">UI-PE</span>
+        <ul class="nav-links">
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="https://github.com/YOUR_USERNAME/UI-PE" target="_blank" class="github">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+            </a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-label">✦ Open Source Project</span>
+            <h1>
+                UI Prompt<br>
+                <span class="serif">Engineering</span>
+            </h1>
+            <p class="hero-desc">
+                设计风格提示词工程库 — 帮助你更精准地向 AI 表达 UI 设计需求。
+                收集优秀的设计案例，提炼可复用的提示词模板。
+            </p>
+            <div class="hero-cta">
+                <a href="#examples" class="btn btn-primary">
+                    查看示例
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/YOUR_USERNAME/UI-PE" target="_blank" class="btn btn-secondary">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Star on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section class="examples" id="examples">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <div class="section-label">Live Examples</div>
+                    <h2 class="section-title">设计示例</h2>
+                </div>
+                <a href="examples/" class="view-all">
+                    查看全部
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Featured -->
+            <div class="featured-grid">
+                <a href="examples/elevated-design-example.html" class="card">
+                    <span class="card-badge">⭐ Featured</span>
+                    <h3>Elevated Landing Page</h3>
+                    <p>精致的排版、克制的配色、有张力的布局。展示如何用字体组合创造高级感。</p>
+                    <div class="card-tags">
+                        <span class="tag">Landing Page</span>
+                        <span class="tag">Typography</span>
+                    </div>
+                </a>
+                <a href="examples/dashboard-elevated-example.html" class="card">
+                    <span class="card-badge">⭐ Featured</span>
+                    <h3>Dashboard UI</h3>
+                    <p>Dribbble 风格的深色仪表板。精致的侧边栏、数据卡片和图表设计。</p>
+                    <div class="card-tags">
+                        <span class="tag">Dashboard</span>
+                        <span class="tag">Dark Theme</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Basic Examples -->
+            <div class="basic-grid">
+                <a href="examples/minimalist-example.html" class="basic-card">
+                    <div class="icon">⚪</div>
+                    <h4>极简风格</h4>
+                    <p>大量留白，简洁设计</p>
+                </a>
+                <a href="examples/tech-modern-example.html" class="basic-card">
+                    <div class="icon">🔵</div>
+                    <h4>科技风</h4>
+                    <p>渐变色，动态效果</p>
+                </a>
+                <a href="examples/business-pro-example.html" class="basic-card">
+                    <div class="icon">💼</div>
+                    <h4>商务风</h4>
+                    <p>专业可信，数据驱动</p>
+                </a>
+                <a href="examples/creative-bold-example.html" class="basic-card">
+                    <div class="icon">🎨</div>
+                    <h4>创意风</h4>
+                    <p>鲜艳配色，趣味插画</p>
+                </a>
+                <a href="examples/glassmorphism-example.html" class="basic-card">
+                    <div class="icon">💎</div>
+                    <h4>玻璃态</h4>
+                    <p>半透明，模糊效果</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-label">What's Included</div>
+            <h2 class="section-title">项目包含</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h4>📝 提示词模板</h4>
+                    <p>12+ 种设计风格的详细提示词模板，包含完整版和快速版，可直接复制使用。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🎨 可视化示例</h4>
+                    <p>每种风格都有对应的 HTML 示例页面，可以直接在浏览器中预览效果。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📚 设计指南</h4>
+                    <p>风格对比表、选择器和快速开始指南，帮助你找到最适合的设计方向。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left">
+            UI-PE: UI Prompt Engineering © 2025
+        </div>
+        <div class="footer-right">
+            <a href="https://github.com/YOUR_USERNAME/UI-PE" target="_blank">GitHub</a>
+            <a href="prompts/landing-pages/">提示词库</a>
+            <a href="examples/">示例</a>
+        </div>
+    </footer>
+</body>
+</html>
+

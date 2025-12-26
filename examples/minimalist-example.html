@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极简风格示例 - AI 写作助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            color: #1a1a1a;
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 24px;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #666666;
+            margin-bottom: 48px;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background: #000000;
+            color: #ffffff;
+            padding: 16px 48px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 24px;
+            background: #fafafa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            margin-top: 80px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 24px;
+            border: 2px solid #000000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .feature-item h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .feature-item p {
+            color: #666666;
+            font-size: 16px;
+        }
+
+        /* Logos Section */
+        .logos {
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .logos p {
+            color: #999999;
+            font-size: 14px;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .logo-grid {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            opacity: 0.4;
+        }
+
+        .logo-item {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            padding: 120px 24px;
+            text-align: center;
+        }
+
+        .footer-cta h2 {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 64px;
+            }
+
+            .footer-cta h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>AI 驱动的<br>智能写作助手</h1>
+            <p class="subtitle">帮助内容创作者提升 10 倍写作效率，支持多语言创作和 SEO 优化</p>
+            <a href="#" class="cta-button">免费开始写作</a>
+        </div>
+    </section>
+
+    <!-- Logos Section -->
+    <section class="logos">
+        <div class="container">
+            <p>10,000+ 创作者的信任选择</p>
+            <div class="logo-grid">
+                <div class="logo-item">Medium</div>
+                <div class="logo-item">Notion</div>
+                <div class="logo-item">Substack</div>
+                <div class="logo-item">Ghost</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 48px; margin-bottom: 0;">核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">✍️</div>
+                    <h3>AI 辅助写作</h3>
+                    <p>智能续写、改写和优化，让写作更流畅自然</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3>多语言支持</h3>
+                    <p>支持 50+ 种语言，一键翻译和本地化</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📈</div>
+                    <h3>SEO 优化</h3>
+                    <p>自动优化关键词，提升搜索引擎排名</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <div class="container">
+            <h2>开始你的创作之旅</h2>
+            <p class="subtitle" style="margin: 24px auto 48px;">无需信用卡，免费试用 14 天</p>
+            <a href="#" class="cta-button">立即开始</a>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 48px 24px; color: #999999; font-size: 14px; border-top: 1px solid #eeeeee;">
+        <p>极简风格示例 - UI-PE 提示词工程库</p>
+    </footer>
+</body>
+</html>
+

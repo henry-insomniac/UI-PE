@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevated Design - 有品味的设计示例</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-400: #a3a3a3;
+            --gray-600: #525252;
+            --accent: #5046e5;
+            --accent-soft: #eef2ff;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Syne', -apple-system, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ==================== 
+           HERO - 大胆的排版
+        ==================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 32px 48px 80px;
+            position: relative;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.02em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--black);
+        }
+
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* 真正大胆的标题排版 */
+        .hero-title {
+            font-size: clamp(64px, 12vw, 180px);
+            font-weight: 800;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 48px;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .serif {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* 副标题和CTA的精致布局 */
+        .hero-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 80px;
+            align-items: end;
+        }
+
+        .hero-desc {
+            font-size: 15px;
+            color: var(--gray-600);
+            line-height: 1.8;
+            max-width: 320px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--black);
+            color: var(--white);
+            padding: 16px 28px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            border-radius: 999px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        .btn-primary svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(4px);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--black);
+            padding: 16px 0;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .btn-secondary::after {
+            content: '';
+            position: absolute;
+            bottom: 14px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--black);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s;
+        }
+
+        .btn-secondary:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .hero-scroll {
+            font-size: 12px;
+            color: var(--gray-400);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .scroll-line {
+            width: 48px;
+            height: 1px;
+            background: var(--gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            animation: scroll-hint 2s infinite;
+        }
+
+        @keyframes scroll-hint {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ==================== 
+           SECTION - 留白与对比
+        ==================== */
+        .section {
+            padding: 160px 48px;
+        }
+
+        .section-dark {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .section-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            max-width: 1400px;
+            margin: 0 auto 120px;
+        }
+
+        .section-number {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            color: var(--gray-400);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .section-desc {
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--gray-600);
+            max-width: 480px;
+        }
+
+        .section-dark .section-desc {
+            color: var(--gray-400);
+        }
+
+        /* ==================== 
+           FEATURES - Bento Grid 但有品味
+        ==================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(2, 320px);
+            gap: 16px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--gray-100);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-card.large {
+            grid-column: span 7;
+        }
+
+        .feature-card.medium {
+            grid-column: span 5;
+        }
+
+        .feature-card.small {
+            grid-column: span 4;
+        }
+
+        .feature-card.accent {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .feature-card.dark {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .feature-label {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        .feature-title {
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.2;
+            max-width: 280px;
+        }
+
+        .feature-visual {
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        /* ==================== 
+           STATS - 数字的力量
+        ==================== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--gray-200);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            background: var(--white);
+            padding: 80px 48px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+        }
+
+        /* ==================== 
+           TESTIMONIAL - 克制的社会证明
+        ==================== */
+        .testimonial-section {
+            padding: 200px 48px;
+            text-align: center;
+        }
+
+        .testimonial-quote {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: clamp(28px, 4vw, 48px);
+            font-style: italic;
+            line-height: 1.4;
+            max-width: 900px;
+            margin: 0 auto 48px;
+            color: var(--black);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+        }
+
+        .author-info {
+            text-align: left;
+        }
+
+        .author-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .author-role {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        /* ==================== 
+           CTA - 有冲击力的结尾
+        ==================== */
+        .cta-section {
+            background: var(--black);
+            color: var(--white);
+            padding: 200px 48px;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: clamp(40px, 7vw, 100px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            margin-bottom: 48px;
+        }
+
+        .cta-title .serif {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--white);
+            color: var(--black);
+            padding: 20px 40px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            border-radius: 999px;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(255,255,255,0.2);
+        }
+
+        /* ==================== 
+           FOOTER - 简洁有力
+        ==================== */
+        footer {
+            padding: 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .footer-left {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-right a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .footer-right a:hover {
+            color: var(--black);
+        }
+
+        /* ==================== 
+           响应式
+        ==================== */
+        @media (max-width: 1024px) {
+            .hero-bottom {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-scroll {
+                display: none;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            .feature-card.large,
+            .feature-card.medium,
+            .feature-card.small {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 24px 24px 60px;
+            }
+            .section {
+                padding: 80px 24px;
+            }
+            .section-header {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .hero-bottom {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <nav class="nav">
+            <div class="logo">Studio</div>
+            <ul class="nav-links">
+                <li><a href="#">Work</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="line">We design</span>
+                <span class="line"><span class="serif">digital</span> products</span>
+                <span class="line">that matter.</span>
+            </h1>
+        </div>
+
+        <div class="hero-bottom">
+            <p class="hero-desc">
+                A design studio focused on creating meaningful digital experiences. 
+                We blend strategy, design, and technology to build products people love.
+            </p>
+            <div class="hero-cta">
+                <a href="#" class="btn-primary">
+                    Start a project
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="#" class="btn-secondary">View our work</a>
+            </div>
+            <div class="hero-scroll">
+                <span class="scroll-line"></span>
+                <span>Scroll to explore</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+        <div class="section-header">
+            <div>
+                <div class="section-number">01</div>
+                <h2 class="section-title">What we do</h2>
+            </div>
+            <p class="section-desc">
+                We partner with ambitious brands and people to design and build 
+                products that create impact. Our process is collaborative, strategic, 
+                and focused on delivering real results.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card large">
+                <span class="feature-label">Strategy</span>
+                <h3 class="feature-title">Research-driven approach to solve complex problems</h3>
+                <div class="feature-visual"></div>
+            </div>
+            <div class="feature-card medium accent">
+                <span class="feature-label">Design</span>
+                <h3 class="feature-title">Beautiful interfaces that users love</h3>
+            </div>
+            <div class="feature-card small">
+                <span class="feature-label">Development</span>
+                <h3 class="feature-title">Scalable & performant</h3>
+            </div>
+            <div class="feature-card small dark">
+                <span class="feature-label">Motion</span>
+                <h3 class="feature-title">Delightful interactions</h3>
+            </div>
+            <div class="feature-card small">
+                <span class="feature-label">Brand</span>
+                <h3 class="feature-title">Identity systems</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section">
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Projects delivered</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Years of experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Happy clients</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="testimonial-section">
+        <blockquote class="testimonial-quote">
+            "They transformed our vision into a product that exceeded 
+            all expectations. The attention to detail and strategic 
+            thinking was exceptional."
+        </blockquote>
+        <div class="testimonial-author">
+            <div class="author-avatar"></div>
+            <div class="author-info">
+                <div class="author-name">Sarah Chen</div>
+                <div class="author-role">CEO, Fintech Startup</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2 class="cta-title">
+            Let's build<br>
+            <span class="serif">something great</span>
+        </h2>
+        <a href="#" class="cta-btn">
+            Get in touch
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left">© 2025 Studio. All rights reserved.</div>
+        <div class="footer-right">
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Dribbble</a>
+        </div>
+    </footer>
+</body>
+</html>
+

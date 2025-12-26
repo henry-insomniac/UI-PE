@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI-PE 设计风格示例</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Syne', -apple-system, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            padding: 80px 48px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 80px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+
+        .logo {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .header-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .header-links a:hover {
+            color: #fff;
+        }
+
+        h1 {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            max-width: 500px;
+        }
+
+        /* Section Labels */
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #222;
+        }
+
+        /* Featured Section - 精选 */
+        .featured-section {
+            margin-bottom: 80px;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .featured-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 40px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            min-height: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .featured-card:hover {
+            border-color: #333;
+            transform: translateY(-4px);
+        }
+
+        .featured-card:hover::before {
+            opacity: 1;
+        }
+
+        .featured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            width: fit-content;
+        }
+
+        .featured-card h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .featured-card p {
+            color: #888;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: auto;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .meta-tag {
+            font-size: 12px;
+            color: #555;
+            padding: 6px 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+        }
+
+        /* Basic Examples Grid */
+        .examples-section {
+            margin-bottom: 80px;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .example-card {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 32px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .example-card:hover {
+            border-color: #333;
+            background: #151515;
+        }
+
+        .example-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .example-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .example-card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 120px;
+            padding-top: 48px;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            color: #555;
+            font-size: 13px;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-right a {
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .footer-right a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 1024px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            .examples-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 24px;
+            }
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+            footer {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <span class="logo">UI-PE</span>
+                <div class="header-links">
+                    <a href="../README.md">文档</a>
+                    <a href="../prompts/landing-pages/">提示词库</a>
+                </div>
+            </div>
+            <h1>Design<br>Examples</h1>
+            <p class="subtitle">
+                精选的设计示例，展示不同风格的落地页和仪表板。
+                点击查看完整页面，按 F12 查看源代码。
+            </p>
+        </header>
+
+        <!-- Featured - 精选示例 -->
+        <section class="featured-section">
+            <div class="section-label">✦ Featured — 精选示例</div>
+            <div class="featured-grid">
+                <a href="elevated-design-example.html" class="featured-card">
+                    <span class="featured-badge">⭐ NEW</span>
+                    <h2>Elevated Landing Page</h2>
+                    <p>
+                        精致的排版、克制的配色、有张力的布局。
+                        展示如何用 Syne + Instrument Serif 字体组合创造高级感。
+                    </p>
+                    <div class="featured-meta">
+                        <span class="meta-tag">Landing Page</span>
+                        <span class="meta-tag">Typography</span>
+                        <span class="meta-tag">Dribbble Style</span>
+                    </div>
+                </a>
+
+                <a href="dashboard-elevated-example.html" class="featured-card">
+                    <span class="featured-badge">⭐ NEW</span>
+                    <h2>Dashboard UI</h2>
+                    <p>
+                        Dribbble 风格的深色仪表板。精致的侧边栏、数据卡片、
+                        图表和表格。展示如何设计专业的后台界面。
+                    </p>
+                    <div class="featured-meta">
+                        <span class="meta-tag">Dashboard</span>
+                        <span class="meta-tag">Dark Theme</span>
+                        <span class="meta-tag">Data Viz</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Basic Examples -->
+        <section class="examples-section">
+            <div class="section-label">Basic Examples — 基础示例</div>
+            <div class="examples-grid">
+                <a href="minimalist-example.html" class="example-card">
+                    <div class="example-icon">⚪</div>
+                    <h3>极简风格</h3>
+                    <p>大量留白，简洁图标，单一配色。适合 B2B 工具和专业产品。</p>
+                </a>
+
+                <a href="tech-modern-example.html" class="example-card">
+                    <div class="example-icon">🔵</div>
+                    <h3>现代科技风</h3>
+                    <p>渐变色、3D 效果、动态背景。适合 AI 产品和开发工具。</p>
+                </a>
+
+                <a href="business-pro-example.html" class="example-card">
+                    <div class="example-icon">💼</div>
+                    <h3>专业商务风</h3>
+                    <p>深色背景、数据可视化、ROI 展示。适合企业级产品。</p>
+                </a>
+
+                <a href="creative-bold-example.html" class="example-card">
+                    <div class="example-icon">🎨</div>
+                    <h3>创意大胆风</h3>
+                    <p>鲜艳配色、趣味插画、有机形状。适合创意工具和 B2C 产品。</p>
+                </a>
+
+                <a href="glassmorphism-example.html" class="example-card">
+                    <div class="example-icon">💎</div>
+                    <h3>玻璃态风格</h3>
+                    <p>半透明、模糊效果、轻盈优雅。适合云服务和现代应用。</p>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            UI-PE: UI Prompt Engineering 提示词工程库
+        </div>
+        <div class="footer-right">
+            <a href="../QUICK-START.md">快速开始</a>
+            <a href="../STYLE-COMPARISON.md">风格对比</a>
+            <a href="../prompts/landing-pages/">提示词模板</a>
+        </div>
+    </footer>
+</body>
+</html>
