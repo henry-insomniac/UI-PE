@@ -48,6 +48,19 @@ UI-PE/
 
 ## 🚀 快速开始
 
+### 方式 0：使用生成器（最推荐）
+
+访问 GitHub Pages：**[https://henry-insomniac.github.io/UI-PE/generator.html](https://henry-insomniac.github.io/UI-PE/generator.html)**
+
+你只需要做三件事：
+- 填入业务简报（产品名/目标用户/价值主张/CTA/功能）
+- 选择页面类型（Landing 或 Dashboard）
+- 选择风格 DNA（排版/留白/色彩/形状/动效）
+
+然后点击复制，把“最终 Prompt”直接发给 AI 即可。
+
+> 生成器输出的是 **Prompt（用于驱动 AI）**，不在页面内直接生成代码；输出目标（HTML/CSS 或 React+Tailwind）作为约束写进 Prompt。
+
 ### 方式 1：在线浏览提示词库（推荐）
 
 访问 GitHub Pages：**[https://henry-insomniac.github.io/UI-PE/library.html](https://henry-insomniac.github.io/UI-PE/library.html)**
@@ -56,6 +69,13 @@ UI-PE/
 - 🏷️ 标签筛选
 - 📋 一键复制
 - 💻 输出目标切换（HTML/CSS 或 React+Tailwind）
+
+### 生成器使用建议（让风格更“高级”、更不模板）
+
+- **先定 DNA，后定内容**：第一次只用默认内容跑通风格；第二次再替换业务文案。
+- **只改一件事**：每轮迭代只改 1 个 DNA（例如仅改 Typography），否则你无法判断差异来自哪里。
+- **对抗模板化的优先级**：排版系统 > 留白节奏 > 对齐与分割 > 颜色克制 > 动效（最后才考虑）。
+- **如果 AI 仍然很模板**：把 Prompt 里“禁止清单”复制到最前面，并要求 AI 先逐条复述它将避免什么。
 
 ### 方式 2：组合使用提示词模块
 
