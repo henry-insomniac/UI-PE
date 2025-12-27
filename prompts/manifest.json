@@ -1,0 +1,275 @@
+{
+  "version": "2.0.0",
+  "description": "UI-PE Prompt Library - 可组合的提示词模块系统",
+  "modules": {
+    "base": [
+      {
+        "id": "foundation",
+        "name": "基础规范",
+        "path": "prompts/_base/foundation.md",
+        "description": "通用交付规范、可访问性、响应式、性能优化、反模板约束"
+      }
+    ],
+    "styles": [
+      {
+        "id": "minimalist",
+        "name": "极简风格",
+        "path": "prompts/styles/minimalist.md",
+        "signatures": ["80-120px 区块间距", "单一品牌色", "线性图标", "1.6+ 行高"]
+      },
+      {
+        "id": "dashboard-dark",
+        "name": "Dashboard 深色风格",
+        "path": "prompts/styles/dashboard-dark.md",
+        "signatures": ["4 层灰度", "rgba(255,255,255,0.06) 边框", "JetBrains Mono", "16px 圆角"]
+      }
+    ],
+    "pageTypes": [
+      {
+        "id": "landing-page",
+        "name": "SaaS 落地页",
+        "path": "prompts/page-types/landing-page.md",
+        "sections": ["Navigation", "Hero", "Features", "Social Proof", "CTA", "Footer"]
+      },
+      {
+        "id": "dashboard",
+        "name": "Dashboard 仪表板",
+        "path": "prompts/page-types/dashboard.md",
+        "components": ["Sidebar", "TopNav", "StatsCards", "Charts", "DataTable", "Filters"]
+      }
+    ],
+    "adapters": [
+      {
+        "id": "html-css",
+        "name": "HTML/CSS",
+        "path": "prompts/adapters/html-css.md",
+        "output": "单文件 HTML + 内嵌 CSS"
+      },
+      {
+        "id": "react-tailwind",
+        "name": "React + Tailwind",
+        "path": "prompts/adapters/react-tailwind.md",
+        "output": "TypeScript 组件 + Tailwind 类"
+      }
+    ]
+  },
+  "prompts": [
+    {
+      "id": "minimalist",
+      "name": "极简风格",
+      "nameEn": "Minimalist",
+      "icon": "⚪",
+      "category": "landing-pages",
+      "tags": ["minimalist", "clean", "whitespace", "typography-led"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/minimalist.md",
+      "description": "大量留白，简洁图标，单一配色。适合 B2B 工具和专业产品。",
+      "useCases": ["B2B SaaS", "工具类产品", "专业服务"],
+      "signatures": [
+        "80-120px 区块间距",
+        "单一品牌色 + 黑白灰",
+        "线性图标 (stroke-based)",
+        "无衬线字体 + 充足行高 1.6+"
+      ]
+    },
+    {
+      "id": "tech-modern",
+      "name": "现代科技风",
+      "nameEn": "Tech Modern",
+      "icon": "🔵",
+      "category": "landing-pages",
+      "tags": ["modern", "tech", "gradient", "3d", "animation"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/tech-modern.md",
+      "description": "渐变色、3D 效果、动态背景。适合 AI 产品和开发工具。",
+      "useCases": ["AI 产品", "开发者工具", "创新技术"],
+      "signatures": [
+        "渐变背景或渐变文字",
+        "3D 元素或视差效果",
+        "动态交互动画",
+        "现代无衬线字体"
+      ]
+    },
+    {
+      "id": "business-pro",
+      "name": "专业商务风",
+      "nameEn": "Business Professional",
+      "icon": "💼",
+      "category": "landing-pages",
+      "tags": ["business", "professional", "data-viz", "enterprise"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/business-pro.md",
+      "description": "深色背景、数据可视化、ROI 展示。适合企业级产品。",
+      "useCases": ["企业级 SaaS", "B2B 平台", "金融科技"],
+      "signatures": [
+        "深色或深蓝背景",
+        "数据可视化图表",
+        "ROI/指标突出展示",
+        "严肃可信的配色"
+      ]
+    },
+    {
+      "id": "creative-bold",
+      "name": "创意大胆风",
+      "nameEn": "Creative Bold",
+      "icon": "🎨",
+      "category": "landing-pages",
+      "tags": ["creative", "bold", "colorful", "illustration", "playful"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/creative-bold.md",
+      "description": "鲜艳配色、趣味插画、有机形状。适合创意工具和 B2C 产品。",
+      "useCases": ["创意工具", "B2C 产品", "营销平台"],
+      "signatures": [
+        "多色配色方案",
+        "插画或抽象图形",
+        "不规则布局",
+        "活泼的字体组合"
+      ]
+    },
+    {
+      "id": "glassmorphism",
+      "name": "玻璃态风格",
+      "nameEn": "Glassmorphism",
+      "icon": "💎",
+      "category": "landing-pages",
+      "tags": ["glassmorphism", "transparent", "blur", "modern", "elegant"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/glassmorphism.md",
+      "description": "半透明、模糊效果、轻盈优雅。适合云服务和现代应用。",
+      "useCases": ["云服务", "现代应用", "设计工具"],
+      "signatures": [
+        "backdrop-filter: blur()",
+        "rgba 半透明背景",
+        "轻微边框高光",
+        "多层次叠加"
+      ]
+    },
+    {
+      "id": "dark-mode",
+      "name": "深色模式",
+      "nameEn": "Dark Mode",
+      "icon": "🌙",
+      "category": "landing-pages",
+      "tags": ["dark", "dark-mode", "high-contrast", "developer"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/dark-mode.md",
+      "description": "深色背景、高对比度、发光效果。适合开发者工具和技术产品。",
+      "useCases": ["开发者工具", "CLI 工具", "API 服务"],
+      "signatures": [
+        "深色背景 (#0a0a0a - #111)",
+        "rgba(255,255,255,0.1) 边框",
+        "发光效果 box-shadow",
+        "渐变文字标题"
+      ]
+    },
+    {
+      "id": "gradient-style",
+      "name": "渐变色风格",
+      "nameEn": "Gradients",
+      "icon": "🌈",
+      "category": "landing-pages",
+      "tags": ["gradient", "colorful", "vibrant", "modern"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/gradient-style.md",
+      "description": "大胆渐变、流动色彩、视觉冲击。适合创新产品和品牌展示。",
+      "useCases": ["创新产品", "品牌展示", "设计平台"],
+      "signatures": [
+        "大面积渐变背景",
+        "渐变文字或按钮",
+        "色彩流动感",
+        "鲜艳的配色组合"
+      ]
+    },
+    {
+      "id": "bento-layout",
+      "name": "Bento 布局",
+      "nameEn": "Bento Layout",
+      "icon": "🍱",
+      "category": "landing-pages",
+      "tags": ["bento", "grid", "modular", "apple-style"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/bento-layout.md",
+      "description": "网格卡片布局、不规则尺寸、苹果风格。适合展示多功能产品。",
+      "useCases": ["多功能平台", "产品套件", "功能展示"],
+      "signatures": [
+        "CSS Grid 不规则布局",
+        "卡片圆角 16-24px",
+        "不同尺寸的功能卡片",
+        "留白与密度平衡"
+      ]
+    },
+    {
+      "id": "scroll-animations",
+      "name": "滚动动画",
+      "nameEn": "Scroll Animations",
+      "icon": "✨",
+      "category": "landing-pages",
+      "tags": ["animation", "scroll", "interactive", "storytelling"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/scroll-animations.md",
+      "description": "视差滚动、渐进式展示、叙事性。适合产品故事和品牌展示。",
+      "useCases": ["产品故事", "品牌展示", "营销活动"],
+      "signatures": [
+        "滚动触发动画",
+        "视差效果 (parallax)",
+        "渐进式内容展示",
+        "叙事性布局"
+      ]
+    },
+    {
+      "id": "copy-focused",
+      "name": "以文案为主",
+      "nameEn": "Copy Focused",
+      "icon": "📝",
+      "category": "landing-pages",
+      "tags": ["typography", "editorial", "content-first", "minimalist"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/copy-focused.md",
+      "description": "大字号排版、编辑设计、内容优先。适合内容驱动的产品。",
+      "useCases": ["内容平台", "写作工具", "出版"],
+      "signatures": [
+        "超大标题 (80px+)",
+        "衬线或显示字体",
+        "长文案排版优化",
+        "内容层次分明"
+      ]
+    },
+    {
+      "id": "playful",
+      "name": "俏皮风格",
+      "nameEn": "Playful",
+      "icon": "🎈",
+      "category": "landing-pages",
+      "tags": ["playful", "fun", "illustration", "casual", "friendly"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/playful.md",
+      "description": "有趣插画、圆润形状、友好氛围。适合消费级产品和教育平台。",
+      "useCases": ["消费级产品", "教育平台", "社区应用"],
+      "signatures": [
+        "圆润形状 (rounded corners)",
+        "卡通或手绘插画",
+        "明亮友好的配色",
+        "活泼的微动效"
+      ]
+    },
+    {
+      "id": "black-white",
+      "name": "黑白风格",
+      "nameEn": "Black & White",
+      "icon": "⚫",
+      "category": "landing-pages",
+      "tags": ["monochrome", "minimalist", "high-contrast", "editorial"],
+      "outputTargets": ["html-css", "react-tailwind"],
+      "path": "prompts/landing-pages/black-white.md",
+      "description": "纯黑白配色、强对比、编辑式设计。适合高端品牌和艺术项目。",
+      "useCases": ["高端品牌", "艺术项目", "设计工作室"],
+      "signatures": [
+        "纯黑白配色 (#000 / #fff)",
+        "极简留白",
+        "强烈对比",
+        "编辑式排版"
+      ]
+    }
+  ]
+}
+

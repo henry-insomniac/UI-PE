@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提示词库 | UI-PE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-400: #888;
+            --gray-600: #555;
+            --gray-800: #222;
+            --gray-900: #111;
+            --white: #fafafa;
+            --accent: #8b5cf6;
+            --accent-soft: rgba(139, 92, 246, 0.15);
+            --accent-hover: #7c3aed;
+            --success: #10b981;
+            --border: rgba(255,255,255,0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Syne', -apple-system, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 48px 80px;
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 64px;
+        }
+
+        .page-title {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .page-desc {
+            font-size: 18px;
+            color: var(--gray-400);
+            max-width: 600px;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            background: var(--gray-900);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--white);
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: #151515;
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 16px;
+            background: var(--gray-900);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: var(--gray-400);
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--gray-600);
+            color: var(--white);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--white);
+        }
+
+        .output-toggle {
+            display: flex;
+            gap: 0;
+            background: var(--gray-900);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .output-toggle button {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: var(--gray-400);
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .output-toggle button.active {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 32px;
+            padding: 20px;
+            background: var(--gray-900);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+            font-feature-settings: 'tnum';
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        /* Grid */
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 16px;
+        }
+
+        .prompt-card {
+            background: var(--gray-900);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .prompt-card:hover {
+            border-color: var(--gray-600);
+            transform: translateY(-2px);
+        }
+
+        .prompt-card.featured {
+            border-color: var(--accent);
+        }
+
+        .prompt-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .prompt-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .prompt-info {
+            flex: 1;
+        }
+
+        .prompt-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--white);
+        }
+
+        .prompt-name-en {
+            font-size: 12px;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .prompt-desc {
+            font-size: 14px;
+            color: var(--gray-400);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .prompt-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 11px;
+            color: var(--gray-600);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .prompt-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--gray-400);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gray-600);
+            color: var(--white);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--gray-900);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 32px 32px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .modal-icon {
+            font-size: 40px;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--gray-400);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px;
+        }
+
+        .prompt-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--gray-200);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .modal-footer {
+            padding: 24px 32px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-footer .btn {
+            flex: 0 0 auto;
+            min-width: 140px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            padding: 16px 24px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transform: translateY(120%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 32px;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-desc {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav, .container {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .prompts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .modal {
+                padding: 16px;
+            }
+
+            .modal-content {
+                max-height: 95vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Nav -->
+    <nav>
+        <a href="index.html" class="logo">UI-PE</a>
+        <div class="nav-links">
+            <a href="index.html#examples">Examples</a>
+            <a href="library.html">Library</a>
+            <a href="https://github.com/henry-insomniac/UI-PE" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="page-title">Prompt Library</h1>
+            <p class="page-desc">
+                浏览、搜索、复制 — 12+ 种设计风格的专业提示词模板，支持 HTML/CSS 和 React+Tailwind 输出。
+            </p>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索提示词...">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-category="all">全部</button>
+                <button class="filter-btn" data-category="landing-pages">Landing Pages</button>
+                <button class="filter-btn" data-category="dashboard">Dashboard</button>
+            </div>
+            <div class="output-toggle">
+                <button class="active" data-output="all">全部</button>
+                <button data-output="html-css">HTML/CSS</button>
+                <button data-output="react-tailwind">React+TW</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-value" id="totalCount">12</span>
+                <span class="stat-label">提示词</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="visibleCount">12</span>
+                <span class="stat-label">当前显示</span>
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="prompts-grid" id="promptsGrid">
+            <!-- Cards will be inserted here by JS -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="promptModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-row">
+                    <span class="modal-icon" id="modalIcon">⚪</span>
+                    <div>
+                        <h2 class="modal-title" id="modalTitle">极简风格</h2>
+                        <p class="modal-subtitle" id="modalSubtitle">Minimalist</p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <pre class="prompt-content" id="promptContent">Loading...</pre>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="copyPrompt()">
+                    <span>📋</span> 复制提示词
+                </button>
+                <button class="btn btn-secondary" onclick="openInGitHub()">
+                    <span>↗</span> 在 GitHub 查看
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span>✓</span> 已复制到剪贴板
+    </div>
+
+    <script>
+        let allPrompts = [];
+        let currentPrompt = null;
+        let currentFilters = {
+            search: '',
+            category: 'all',
+            output: 'all'
+        };
+
+        // Load prompts manifest
+        async function loadPrompts() {
+            try {
+                const response = await fetch('prompts/manifest.json');
+                const data = await response.json();
+                allPrompts = data.prompts;
+                renderPrompts();
+            } catch (error) {
+                console.error('Error loading prompts:', error);
+            }
+        }
+
+        // Filter prompts
+        function filterPrompts() {
+            return allPrompts.filter(prompt => {
+                // Search filter
+                if (currentFilters.search) {
+                    const searchLower = currentFilters.search.toLowerCase();
+                    const matchName = prompt.name.toLowerCase().includes(searchLower) ||
+                                    prompt.nameEn.toLowerCase().includes(searchLower);
+                    const matchTags = prompt.tags.some(tag => tag.toLowerCase().includes(searchLower));
+                    const matchDesc = prompt.description.toLowerCase().includes(searchLower);
+                    if (!matchName && !matchTags && !matchDesc) return false;
+                }
+
+                // Category filter
+                if (currentFilters.category !== 'all' && prompt.category !== currentFilters.category) {
+                    return false;
+                }
+
+                // Output target filter
+                if (currentFilters.output !== 'all' && !prompt.outputTargets.includes(currentFilters.output)) {
+                    return false;
+                }
+
+                return true;
+            });
+        }
+
+        // Render prompts
+        function renderPrompts() {
+            const grid = document.getElementById('promptsGrid');
+            const filtered = filterPrompts();
+
+            document.getElementById('visibleCount').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <h3 class="empty-state-title">没有找到匹配的提示词</h3>
+                        <p class="empty-state-desc">尝试调整搜索词或筛选条件</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(prompt => `
+                <div class="prompt-card" onclick="openPrompt('${prompt.id}')">
+                    <div class="prompt-header">
+                        <span class="prompt-icon">${prompt.icon}</span>
+                        <div class="prompt-info">
+                            <div class="prompt-name">${prompt.name}</div>
+                            <div class="prompt-name-en">${prompt.nameEn}</div>
+                        </div>
+                    </div>
+                    <p class="prompt-desc">${prompt.description}</p>
+                    <div class="prompt-tags">
+                        ${prompt.tags.slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="prompt-actions">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); openPrompt('${prompt.id}')">
+                            查看详情
+                        </button>
+                        <button class="btn btn-secondary" onclick="event.stopPropagation(); quickCopy('${prompt.id}')">
+                            📋
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Open prompt modal
+        async function openPrompt(promptId) {
+            const prompt = allPrompts.find(p => p.id === promptId);
+            if (!prompt) return;
+
+            currentPrompt = prompt;
+
+            document.getElementById('modalIcon').textContent = prompt.icon;
+            document.getElementById('modalTitle').textContent = prompt.name;
+            document.getElementById('modalSubtitle').textContent = prompt.nameEn;
+            document.getElementById('promptContent').textContent = 'Loading...';
+
+            document.getElementById('promptModal').classList.add('active');
+
+            // Load prompt content
+            try {
+                const response = await fetch(prompt.path);
+                const content = await response.text();
+                document.getElementById('promptContent').textContent = content;
+            } catch (error) {
+                document.getElementById('promptContent').textContent = 'Error loading prompt content.';
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('promptModal').classList.remove('active');
+        }
+
+        // Copy prompt
+        async function copyPrompt() {
+            const content = document.getElementById('promptContent').textContent;
+            try {
+                await navigator.clipboard.writeText(content);
+                showToast();
+            } catch (error) {
+                console.error('Copy failed:', error);
+            }
+        }
+
+        // Quick copy (copy without opening modal)
+        async function quickCopy(promptId) {
+            const prompt = allPrompts.find(p => p.id === promptId);
+            if (!prompt) return;
+
+            try {
+                const response = await fetch(prompt.path);
+                const content = await response.text();
+                await navigator.clipboard.writeText(content);
+                showToast();
+            } catch (error) {
+                console.error('Copy failed:', error);
+            }
+        }
+
+        // Open in GitHub
+        function openInGitHub() {
+            if (currentPrompt) {
+                const url = `https://github.com/henry-insomniac/UI-PE/blob/main/${currentPrompt.path}`;
+                window.open(url, '_blank');
+            }
+        }
+
+        // Show toast
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentFilters.search = e.target.value;
+            renderPrompts();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilters.category = btn.dataset.category;
+                renderPrompts();
+            });
+        });
+
+        document.querySelectorAll('.output-toggle button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.output-toggle button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilters.output = btn.dataset.output;
+                renderPrompts();
+            });
+        });
+
+        // Close modal on escape or outside click
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        document.getElementById('promptModal').addEventListener('click', (e) => {
+            if (e.target.id === 'promptModal') closeModal();
+        });
+
+        // Initialize
+        loadPrompts();
+    </script>
+</body>
+</html>
+
