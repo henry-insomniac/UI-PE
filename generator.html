@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>生成器 | UI-PE</title>
+  <meta name="description" content="UI-PE 生成器：填表选择风格 DNA，一键生成可复制的最终 Prompt（HTML/CSS 或 React+Tailwind）。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root{
+      --black:#0a0a0a;
+      --white:#fafafa;
+      --gray-50:#f8fafc;
+      --gray-200:#e5e7eb;
+      --gray-400:#888;
+      --gray-600:#555;
+      --panel:#111;
+      --panel-2:#151515;
+      --border:rgba(255,255,255,0.08);
+      --border-2:rgba(255,255,255,0.14);
+      --accent:#8b5cf6;
+      --accent-soft:rgba(139,92,246,0.15);
+      --success:#10b981;
+      --danger:#ef4444;
+      --shadow: 0 24px 80px rgba(0,0,0,0.45);
+      --ease:cubic-bezier(0.4,0,0.2,1);
+      --radius:16px;
+    }
+    html { scroll-behavior:smooth; }
+    body{
+      font-family:'Syne', -apple-system, system-ui, sans-serif;
+      background:var(--black);
+      color:var(--white);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{ color:inherit; text-decoration:none; }
+
+    nav{
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      padding:20px 48px;
+      display:flex; align-items:center; justify-content:space-between;
+      background:rgba(10,10,10,0.8);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .logo{
+      font-weight:800; font-size:18px; letter-spacing:-0.02em;
+      display:flex; align-items:center; gap:10px;
+    }
+    .logo-badge{
+      font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+      padding:6px 10px; border-radius:999px;
+      background:var(--accent-soft); color:var(--accent);
+      border:1px solid rgba(139,92,246,0.25);
+    }
+    .nav-links{ display:flex; gap:18px; align-items:center; }
+    .nav-links a{
+      color:var(--gray-400); font-size:14px; font-weight:600;
+      padding:8px 10px; border-radius:999px;
+      transition: all 0.2s var(--ease);
+    }
+    .nav-links a:hover{ color:var(--white); background:rgba(255,255,255,0.05); }
+    .nav-links a.primary{
+      background:var(--white);
+      color:var(--black);
+      padding:8px 14px;
+    }
+    .nav-links a.primary:hover{ opacity:0.92; }
+
+    .container{
+      max-width:1400px; margin:0 auto;
+      padding:112px 48px 64px;
+    }
+
+    .header{
+      display:flex; justify-content:space-between; gap:24px;
+      align-items:flex-end;
+      margin-bottom:24px;
+    }
+    .title-wrap{ max-width:760px; }
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 14px; border-radius:999px;
+      background:var(--accent-soft); color:var(--accent);
+      font-size:12px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase;
+      border:1px solid rgba(139,92,246,0.25);
+      margin-bottom:14px;
+    }
+    h1{
+      font-size:clamp(34px, 4.2vw, 60px);
+      font-weight:800; line-height:1.02; letter-spacing:-0.03em;
+      margin-bottom:10px;
+    }
+    .sub{
+      color:var(--gray-400);
+      font-size:16px; line-height:1.7;
+      max-width:720px;
+    }
+    .hint{
+      color:var(--gray-600);
+      font-size:12px;
+      margin-top:10px;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:none;
+    }
+    .panel-head{
+      padding:18px 18px 14px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .panel-title{
+      display:flex; align-items:center; gap:10px;
+      font-size:14px; font-weight:800; letter-spacing:0.02em;
+    }
+    .pill{
+      font-size:11px; font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--gray-400);
+      background:rgba(255,255,255,0.03);
+    }
+    .panel-body{ padding:18px; }
+
+    /* Stepper */
+    .steps{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .step{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.02);
+      color:var(--gray-400);
+      font-size:12px; font-weight:800;
+      cursor:pointer;
+      transition: all 0.2s var(--ease);
+      user-select:none;
+    }
+    .step:hover{ border-color:var(--border-2); color:var(--white); }
+    .step.active{
+      background:var(--accent-soft);
+      border-color:rgba(139,92,246,0.4);
+      color:var(--white);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:50%;
+      background:rgba(255,255,255,0.18);
+    }
+    .step.active .dot{ background:var(--accent); }
+
+    .form{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .field{ display:flex; flex-direction:column; gap:8px; }
+    .field.full{ grid-column:1 / -1; }
+    label{
+      font-size:12px; font-weight:800; letter-spacing:0.06em;
+      text-transform:uppercase;
+      color:var(--gray-600);
+    }
+    input, textarea, select{
+      width:100%;
+      background:var(--panel-2);
+      color:var(--white);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px 12px;
+      font-family:'Syne', sans-serif;
+      font-size:14px;
+      outline:none;
+      transition: all 0.2s var(--ease);
+    }
+    textarea{
+      min-height:96px;
+      resize:vertical;
+      line-height:1.6;
+    }
+    input:focus, textarea:focus, select:focus{
+      border-color:rgba(139,92,246,0.7);
+      box-shadow: 0 0 0 4px rgba(139,92,246,0.12);
+    }
+    .help{
+      color:var(--gray-600);
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:14px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 16px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:13px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      color:var(--white);
+      cursor:pointer;
+      transition: all 0.25s var(--ease);
+      user-select:none;
+    }
+    .btn:hover{ border-color:var(--border-2); transform:translateY(-1px); }
+    .btn.primary{
+      background:var(--white);
+      color:var(--black);
+      border-color:rgba(255,255,255,0.2);
+    }
+    .btn.primary:hover{ opacity:0.94; }
+    .btn.danger{
+      background:rgba(239,68,68,0.12);
+      border-color:rgba(239,68,68,0.25);
+      color:#fecaca;
+    }
+    .btn.danger:hover{ border-color:rgba(239,68,68,0.45); }
+    .btn.small{ padding:10px 14px; font-size:12px; }
+
+    /* Output */
+    .output-meta{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+      margin-bottom:12px;
+    }
+    .kv{
+      font-size:11px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--gray-400);
+      background:rgba(255,255,255,0.02);
+    }
+    .kv strong{ color:var(--white); }
+
+    .out{
+      font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:12.5px;
+      line-height:1.8;
+      white-space:pre-wrap;
+      word-break:break-word;
+      padding:16px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#0d0d10;
+      min-height:440px;
+      max-height:60vh;
+      overflow:auto;
+    }
+
+    .toast{
+      position:fixed;
+      right:24px;
+      bottom:24px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:rgba(16,185,129,0.14);
+      border:1px solid rgba(16,185,129,0.28);
+      color:#d1fae5;
+      box-shadow: var(--shadow);
+      transform: translateY(120%);
+      opacity:0;
+      transition: all 0.28s var(--ease);
+      z-index:2000;
+      display:flex; gap:10px; align-items:center;
+      font-size:13px;
+      font-weight:800;
+    }
+    .toast.show{ transform:translateY(0); opacity:1; }
+
+    .warn{
+      border:1px solid rgba(245,158,11,0.25);
+      background:rgba(245,158,11,0.08);
+      padding:12px 14px;
+      border-radius:12px;
+      color:#fde68a;
+      font-size:13px;
+      line-height:1.6;
+      margin-top:12px;
+    }
+    .warn strong{ color:#fff; }
+
+    @media (max-width: 1024px){
+      .layout{ grid-template-columns:1fr; }
+      .out{ min-height:360px; }
+    }
+    @media (max-width: 768px){
+      nav{ padding-left:24px; padding-right:24px; }
+      .container{ padding-left:24px; padding-right:24px; }
+      .nav-links{ display:none; }
+      .form{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="index.html">
+      UI-PE <span class="logo-badge">Generator</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#examples">Examples</a>
+      <a href="library.html">Library</a>
+      <a class="primary" href="generator.html">Generator</a>
+      <a href="https://github.com/henry-insomniac/UI-PE" target="_blank">GitHub</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="header">
+      <div class="title-wrap">
+        <div class="kicker">Prompt Generator</div>
+        <h1>用“风格 DNA”拼装 Prompt，而不是堆关键词</h1>
+        <p class="sub">
+          填入业务简报，选择页面类型与风格 DNA（排版/间距/色彩/形状/动效），生成可直接复制的<strong>最终 Prompt</strong>。
+          输出目标仅作为约束（HTML/CSS 或 React+Tailwind），不在此页面生成代码。
+        </p>
+        <div class="hint">提示：生成后请把 Prompt 原封不动发给 AI，并在下一轮只改“DNA/约束”，不要同时改内容与风格。</div>
+      </div>
+      <div style="min-width: 320px; max-width: 420px;">
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-title">预设</div>
+            <span class="pill" id="presetCount">—</span>
+          </div>
+          <div class="panel-body">
+            <div class="field full">
+              <label for="presetSelect">Preset</label>
+              <select id="presetSelect"></select>
+              <div class="help">预设会填充默认 DNA 与输出目标，你可以在左侧继续微调。</div>
+            </div>
+            <div class="row">
+              <button class="btn small" id="btnShare">生成可分享链接</button>
+              <button class="btn small danger" id="btnReset">重置</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- Builder -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">生成器表单</div>
+          <div class="steps" id="steps"></div>
+        </div>
+        <div class="panel-body">
+          <div id="stepContent"></div>
+          <div class="warn" id="antiSlopHint" style="display:none;">
+            <strong>反同质化已启用。</strong> 如果 AI 仍产出模板感，请优先增强“签名细节”（字体组合/留白节奏/边框与分割策略），而不是增加装饰。
+          </div>
+          <div class="row">
+            <button class="btn" id="btnPrev">上一步</button>
+            <button class="btn primary" id="btnNext">下一步</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Output -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">最终 Prompt</div>
+          <span class="pill" id="promptStatus">Loading…</span>
+        </div>
+        <div class="panel-body">
+          <div class="output-meta" id="outputMeta"></div>
+          <div class="row" style="margin-top:0; margin-bottom:12px;">
+            <button class="btn primary" id="btnCopy">复制 Prompt</button>
+            <button class="btn" id="btnDownload">下载 .txt</button>
+          </div>
+          <div class="out" id="promptOut"></div>
+          <div class="help" style="margin-top:10px;">
+            复制后建议追加一句：<span style="font-family:'JetBrains Mono', monospace; color: var(--gray-200);">“先复述你的设计决策（DNA）并列出你将遵守的禁止清单，然后再输出结果。”</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">已复制到剪贴板</div>
+
+  <script>
+    const DATA = {
+      schema: null,
+      presets: null,
+      snippetCache: new Map(),
+    };
+
+    const UI = {
+      presetSelect: document.getElementById('presetSelect'),
+      presetCount: document.getElementById('presetCount'),
+      steps: document.getElementById('steps'),
+      stepContent: document.getElementById('stepContent'),
+      btnPrev: document.getElementById('btnPrev'),
+      btnNext: document.getElementById('btnNext'),
+      btnCopy: document.getElementById('btnCopy'),
+      btnDownload: document.getElementById('btnDownload'),
+      btnShare: document.getElementById('btnShare'),
+      btnReset: document.getElementById('btnReset'),
+      promptOut: document.getElementById('promptOut'),
+      promptStatus: document.getElementById('promptStatus'),
+      outputMeta: document.getElementById('outputMeta'),
+      toast: document.getElementById('toast'),
+      antiSlopHint: document.getElementById('antiSlopHint'),
+    };
+
+    const DEFAULT_STATE = {
+      presetId: 'elevatedLanding',
+      stepId: 'brief',
+      brief: {
+        productName: '',
+        targetUsers: '',
+        valueProp: '',
+        primaryCta: '',
+        keyFeatures: '',
+        references: '',
+        avoid: '',
+      },
+      pageType: 'landing',
+      outputTarget: 'html-css',
+      dna: {
+        typography: 'editorialContrast',
+        spacing: 'airyRhythm',
+        color: 'neutralInkAccent',
+        shape: 'radiusSystem16',
+        motion: 'subtleCubic',
+      },
+    };
+
+    let state = structuredClone(DEFAULT_STATE);
+
+    function showToast(text) {
+      UI.toast.textContent = text;
+      UI.toast.classList.add('show');
+      setTimeout(() => UI.toast.classList.remove('show'), 1800);
+    }
+
+    function safeText(v) {
+      return (v ?? '').toString().trim();
+    }
+
+    function parseListLines(text) {
+      const t = safeText(text);
+      if (!t) return [];
+      return t
+        .split(/\\n|,|;|；/g)
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
+
+    function encodeHash(obj) {
+      const params = new URLSearchParams();
+      params.set('preset', obj.presetId);
+      params.set('pageType', obj.pageType);
+      params.set('output', obj.outputTarget);
+      params.set('step', obj.stepId);
+      params.set('typography', obj.dna.typography);
+      params.set('spacing', obj.dna.spacing);
+      params.set('color', obj.dna.color);
+      params.set('shape', obj.dna.shape);
+      params.set('motion', obj.dna.motion);
+      params.set('product', safeText(obj.brief.productName));
+      params.set('users', safeText(obj.brief.targetUsers));
+      params.set('value', safeText(obj.brief.valueProp));
+      params.set('cta', safeText(obj.brief.primaryCta));
+      params.set('features', safeText(obj.brief.keyFeatures));
+      params.set('refs', safeText(obj.brief.references));
+      params.set('avoid', safeText(obj.brief.avoid));
+      return params.toString();
+    }
+
+    function applyHashToState(hash) {
+      const raw = (hash || '').replace(/^#/, '');
+      if (!raw) return;
+      const params = new URLSearchParams(raw);
+
+      const next = structuredClone(DEFAULT_STATE);
+      if (params.get('preset')) next.presetId = params.get('preset');
+      if (params.get('pageType')) next.pageType = params.get('pageType');
+      if (params.get('output')) next.outputTarget = params.get('output');
+      if (params.get('step')) next.stepId = params.get('step');
+
+      next.dna.typography = params.get('typography') || next.dna.typography;
+      next.dna.spacing = params.get('spacing') || next.dna.spacing;
+      next.dna.color = params.get('color') || next.dna.color;
+      next.dna.shape = params.get('shape') || next.dna.shape;
+      next.dna.motion = params.get('motion') || next.dna.motion;
+
+      next.brief.productName = params.get('product') || '';
+      next.brief.targetUsers = params.get('users') || '';
+      next.brief.valueProp = params.get('value') || '';
+      next.brief.primaryCta = params.get('cta') || '';
+      next.brief.keyFeatures = params.get('features') || '';
+      next.brief.references = params.get('refs') || '';
+      next.brief.avoid = params.get('avoid') || '';
+
+      state = next;
+    }
+
+    async function fetchText(path) {
+      if (DATA.snippetCache.has(path)) return DATA.snippetCache.get(path);
+      const res = await fetch(path, { cache: 'no-store' });
+      if (!res.ok) throw new Error('Failed to fetch: ' + path);
+      const txt = await res.text();
+      DATA.snippetCache.set(path, txt);
+      return txt;
+    }
+
+    function getPresetById(id) {
+      return (DATA.presets?.presets || []).find(p => p.id === id) || null;
+    }
+
+    function getStepIndexById(stepId) {
+      const steps = DATA.schema?.steps || [];
+      return Math.max(0, steps.findIndex(s => s.id === stepId));
+    }
+
+    function setStep(stepId) {
+      state.stepId = stepId;
+      renderSteps();
+      renderStepContent();
+      renderPrompt();
+      UI.antiSlopHint.style.display = 'block';
+    }
+
+    function renderSteps() {
+      const steps = DATA.schema?.steps || [];
+      UI.steps.innerHTML = '';
+      steps.forEach(s => {
+        const el = document.createElement('div');
+        el.className = 'step' + (s.id === state.stepId ? ' active' : '');
+        el.innerHTML = '<span class="dot"></span><span>' + s.title + '</span>';
+        el.addEventListener('click', () => setStep(s.id));
+        UI.steps.appendChild(el);
+      });
+      UI.btnPrev.disabled = getStepIndexById(state.stepId) === 0;
+      UI.btnNext.textContent = (getStepIndexById(state.stepId) === steps.length - 1) ? '完成' : '下一步';
+    }
+
+    function renderStepContent() {
+      const step = (DATA.schema?.steps || []).find(s => s.id === state.stepId);
+      if (!step) return;
+
+      const form = document.createElement('div');
+      form.className = 'form';
+
+      step.fields.forEach(field => {
+        const wrap = document.createElement('div');
+        wrap.className = 'field' + (field.full ? ' full' : '');
+
+        const lab = document.createElement('label');
+        lab.setAttribute('for', field.id);
+        lab.textContent = field.label;
+
+        let control;
+        const value = getFieldValue(field);
+        if (field.type === 'textarea') {
+          control = document.createElement('textarea');
+          control.value = value;
+        } else if (field.type === 'select') {
+          control = document.createElement('select');
+          (field.options || []).forEach(opt => {
+            const o = document.createElement('option');
+            o.value = opt.value;
+            o.textContent = opt.label;
+            control.appendChild(o);
+          });
+          control.value = value;
+        } else {
+          control = document.createElement('input');
+          control.type = field.type || 'text';
+          control.value = value;
+        }
+
+        control.id = field.id;
+        control.placeholder = field.placeholder || '';
+        control.addEventListener('input', (e) => {
+          setFieldValue(field, e.target.value);
+          // 任何输入变化都实时更新 prompt
+          renderPrompt();
+        });
+        control.addEventListener('change', (e) => {
+          setFieldValue(field, e.target.value);
+          renderPrompt();
+        });
+
+        wrap.appendChild(lab);
+        wrap.appendChild(control);
+
+        if (field.help) {
+          const help = document.createElement('div');
+          help.className = 'help';
+          help.textContent = field.help;
+          wrap.appendChild(help);
+        }
+
+        form.appendChild(wrap);
+      });
+
+      UI.stepContent.innerHTML = '';
+      UI.stepContent.appendChild(form);
+    }
+
+    function getFieldValue(field) {
+      const k = field.bind?.key;
+      if (!k) return '';
+      const parts = k.split('.');
+      let cur = state;
+      for (const p of parts) cur = cur?.[p];
+      return (cur ?? '').toString();
+    }
+
+    function setFieldValue(field, value) {
+      const k = field.bind?.key;
+      if (!k) return;
+      const parts = k.split('.');
+      let cur = state;
+      for (let i = 0; i < parts.length - 1; i++) cur = cur[parts[i]];
+      cur[parts[parts.length - 1]] = value;
+    }
+
+    function renderPresetSelect() {
+      const presets = DATA.presets?.presets || [];
+      UI.presetSelect.innerHTML = '';
+      presets.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = p.name + ' — ' + p.subtitle;
+        UI.presetSelect.appendChild(opt);
+      });
+      UI.presetCount.textContent = presets.length + ' presets';
+      UI.presetSelect.value = state.presetId;
+      UI.presetSelect.addEventListener('change', () => {
+        const presetId = UI.presetSelect.value;
+        applyPreset(presetId);
+      });
+    }
+
+    function applyPreset(presetId) {
+      const p = getPresetById(presetId);
+      if (!p) return;
+      state.presetId = p.id;
+      state.pageType = p.defaults.pageType;
+      state.outputTarget = p.defaults.outputTarget;
+      state.dna = structuredClone(p.defaults.dna);
+      // 不覆盖 brief，让用户填写的内容保留
+      renderAll();
+      showToast('已应用预设');
+    }
+
+    function renderMeta(preset, promptText) {
+      const items = [];
+      items.push({ k: 'Preset', v: preset?.name || '—' });
+      items.push({ k: 'Page', v: state.pageType });
+      items.push({ k: 'Output', v: state.outputTarget });
+      items.push({ k: 'Length', v: (promptText || '').length + ' chars' });
+      UI.outputMeta.innerHTML = items.map(it => (
+        '<span class="kv"><strong>' + it.k + ':</strong> ' + it.v + '</span>'
+      )).join('');
+    }
+
+    async function buildPrompt() {
+      const preset = getPresetById(state.presetId);
+      const schema = DATA.schema;
+      if (!preset || !schema) return { preset: null, text: '' };
+
+      const brief = state.brief;
+      const keyFeatures = parseListLines(brief.keyFeatures);
+      const references = parseListLines(brief.references);
+      const avoid = parseListLines(brief.avoid);
+
+      // snippets
+      const base = await fetchText(preset.snippets.base);
+      const pageTypeSnippet = await fetchText(preset.snippets.pageTypes[state.pageType]);
+      const adapter = await fetchText(preset.snippets.adapters[state.outputTarget]);
+
+      const dna = preset.dnaLibrary;
+      const typography = dna.typography[state.dna.typography];
+      const spacing = dna.spacing[state.dna.spacing];
+      const color = dna.color[state.dna.color];
+      const shape = dna.shape[state.dna.shape];
+      const motion = dna.motion[state.dna.motion];
+
+      const lines = [];
+      lines.push(base.trim());
+      lines.push('');
+      lines.push('【项目简报 / Brief】');
+      lines.push('- 产品名：' + (safeText(brief.productName) || '[请填写]'));
+      lines.push('- 目标用户：' + (safeText(brief.targetUsers) || '[请填写]'));
+      lines.push('- 核心价值主张：' + (safeText(brief.valueProp) || '[请填写]'));
+      lines.push('- 主 CTA：' + (safeText(brief.primaryCta) || '[请填写]'));
+      if (keyFeatures.length) {
+        lines.push('- 核心功能：');
+        keyFeatures.forEach(f => lines.push('  - ' + f));
+      }
+      if (references.length) {
+        lines.push('- 参考链接（仅作为品味方向，不要照抄结构）：');
+        references.forEach(r => lines.push('  - ' + r));
+      }
+      if (avoid.length) {
+        lines.push('- 禁忌（必须避免）：');
+        avoid.forEach(a => lines.push('  - ' + a));
+      }
+      lines.push('');
+      lines.push('【页面类型 / Page Type】');
+      lines.push(pageTypeSnippet.trim());
+      lines.push('');
+      lines.push('【风格 DNA（硬约束）】');
+      lines.push('Typography: ' + typography.title);
+      typography.rules.forEach(r => lines.push('- ' + r));
+      lines.push('Spacing: ' + spacing.title);
+      spacing.rules.forEach(r => lines.push('- ' + r));
+      lines.push('Color: ' + color.title);
+      color.rules.forEach(r => lines.push('- ' + r));
+      lines.push('Shape: ' + shape.title);
+      shape.rules.forEach(r => lines.push('- ' + r));
+      lines.push('Motion: ' + motion.title);
+      motion.rules.forEach(r => lines.push('- ' + r));
+      lines.push('');
+      lines.push('【输出目标 / Output Target】');
+      lines.push(adapter.trim());
+      lines.push('');
+      lines.push('【输出要求（必须严格遵守）】');
+      lines.push('1) 不要解释你的思考过程，不要输出无关内容。');
+      lines.push('2) 先用 6–10 条要点复述你将执行的“风格 DNA 决策 + 禁止清单”。');
+      lines.push('3) 然后输出最终结果（按 Output Target 的格式）。');
+      lines.push('4) 产物必须明显避开常见模板感（渐变套路、卡片堆叠、无意义 glow、波浪背景等）。');
+
+      return { preset, text: lines.join('\\n') };
+    }
+
+    async function renderPrompt() {
+      try {
+        UI.promptStatus.textContent = 'Building…';
+        const { preset, text } = await buildPrompt();
+        UI.promptOut.textContent = text || '—';
+        renderMeta(preset, text);
+        UI.promptStatus.textContent = 'Ready';
+      } catch (e) {
+        UI.promptOut.textContent = '生成失败：' + (e?.message || String(e));
+        UI.promptStatus.textContent = 'Error';
+      }
+    }
+
+    function renderAll() {
+      renderPresetSelect();
+      renderSteps();
+      renderStepContent();
+      renderPrompt();
+    }
+
+    function resetAll() {
+      state = structuredClone(DEFAULT_STATE);
+      renderAll();
+      showToast('已重置');
+    }
+
+    async function copyPrompt() {
+      const text = UI.promptOut.textContent || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast('已复制 Prompt');
+      } catch {
+        showToast('复制失败（浏览器限制）');
+      }
+    }
+
+    function downloadPrompt() {
+      const text = UI.promptOut.textContent || '';
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ui-pe-prompt.txt';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('已下载');
+    }
+
+    function shareLink() {
+      const hash = encodeHash(state);
+      location.hash = hash;
+      showToast('链接已更新（可复制地址栏）');
+    }
+
+    function bindActions() {
+      UI.btnPrev.addEventListener('click', () => {
+        const steps = DATA.schema?.steps || [];
+        const idx = getStepIndexById(state.stepId);
+        if (idx <= 0) return;
+        setStep(steps[idx - 1].id);
+      });
+      UI.btnNext.addEventListener('click', () => {
+        const steps = DATA.schema?.steps || [];
+        const idx = getStepIndexById(state.stepId);
+        if (idx >= steps.length - 1) {
+          renderPrompt();
+          showToast('已生成');
+          return;
+        }
+        setStep(steps[idx + 1].id);
+      });
+      UI.btnCopy.addEventListener('click', copyPrompt);
+      UI.btnDownload.addEventListener('click', downloadPrompt);
+      UI.btnShare.addEventListener('click', shareLink);
+      UI.btnReset.addEventListener('click', resetAll);
+      window.addEventListener('hashchange', () => {
+        applyHashToState(location.hash);
+        renderAll();
+      });
+    }
+
+    async function init() {
+      UI.promptStatus.textContent = 'Loading…';
+      const [schemaRes, presetsRes] = await Promise.all([
+        fetch('prompts/generator/schema.json', { cache: 'no-store' }),
+        fetch('prompts/generator/presets.json', { cache: 'no-store' }),
+      ]);
+      if (!schemaRes.ok) throw new Error('schema.json 加载失败');
+      if (!presetsRes.ok) throw new Error('presets.json 加载失败');
+      DATA.schema = await schemaRes.json();
+      DATA.presets = await presetsRes.json();
+
+      applyHashToState(location.hash);
+      // 如果 hash preset 不存在，保证 presetId 有效
+      if (!getPresetById(state.presetId)) state.presetId = DATA.presets?.presets?.[0]?.id || DEFAULT_STATE.presetId;
+
+      bindActions();
+      renderAll();
+      UI.promptStatus.textContent = 'Ready';
+      UI.antiSlopHint.style.display = 'block';
+    }
+
+    init().catch(err => {
+      UI.promptOut.textContent = '初始化失败：' + (err?.message || String(err));
+      UI.promptStatus.textContent = 'Error';
+    });
+  </script>
+</body>
+</html>
+
+

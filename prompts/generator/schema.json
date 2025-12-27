@@ -1,0 +1,166 @@
+{
+  "version": "1.0.0",
+  "steps": [
+    {
+      "id": "brief",
+      "title": "业务简报",
+      "fields": [
+        {
+          "id": "productName",
+          "type": "text",
+          "label": "Product Name",
+          "placeholder": "例如：Pulse Analytics",
+          "full": false,
+          "bind": { "key": "brief.productName" }
+        },
+        {
+          "id": "targetUsers",
+          "type": "text",
+          "label": "Target Users",
+          "placeholder": "例如：B2B 增长团队、运营经理",
+          "full": false,
+          "bind": { "key": "brief.targetUsers" }
+        },
+        {
+          "id": "valueProp",
+          "type": "textarea",
+          "label": "Value Proposition",
+          "placeholder": "一句话说明价值：我们帮谁在什么场景下解决什么问题，带来什么收益。",
+          "full": true,
+          "help": "建议 1–2 句，避免空泛词（创新/领先/赋能）。",
+          "bind": { "key": "brief.valueProp" }
+        },
+        {
+          "id": "primaryCta",
+          "type": "text",
+          "label": "Primary CTA",
+          "placeholder": "例如：开始 14 天试用",
+          "full": false,
+          "bind": { "key": "brief.primaryCta" }
+        },
+        {
+          "id": "keyFeatures",
+          "type": "textarea",
+          "label": "Key Features",
+          "placeholder": "用逗号或换行分隔：\n- 实时看板\n- 异常报警\n- 自动周报",
+          "full": true,
+          "help": "建议 3–6 条，写“好处”而不是“组件名”。",
+          "bind": { "key": "brief.keyFeatures" }
+        },
+        {
+          "id": "references",
+          "type": "textarea",
+          "label": "References (Optional)",
+          "placeholder": "放 1–3 个链接（只提供品味方向，不要照抄布局）：\nhttps://...\nhttps://...",
+          "full": true,
+          "bind": { "key": "brief.references" }
+        },
+        {
+          "id": "avoid",
+          "type": "textarea",
+          "label": "Avoid (Optional)",
+          "placeholder": "必须避免的点（逗号或换行分隔）：\n- 不要玻璃态\n- 不要蓝紫渐变",
+          "full": true,
+          "bind": { "key": "brief.avoid" }
+        }
+      ]
+    },
+    {
+      "id": "pageType",
+      "title": "页面类型",
+      "fields": [
+        {
+          "id": "pageTypeSelect",
+          "type": "select",
+          "label": "Page Type",
+          "full": true,
+          "bind": { "key": "pageType" },
+          "options": [
+            { "value": "landing", "label": "Landing Page（落地页）" },
+            { "value": "dashboard", "label": "Dashboard（仪表板）" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dna",
+      "title": "风格 DNA",
+      "fields": [
+        {
+          "id": "dnaTypography",
+          "type": "select",
+          "label": "Typography",
+          "full": false,
+          "bind": { "key": "dna.typography" },
+          "options": [
+            { "value": "editorialContrast", "label": "Editorial Contrast（无衬线 + 斜体衬线对比）" },
+            { "value": "cleanSans", "label": "Clean Sans（纯净无衬线）" }
+          ]
+        },
+        {
+          "id": "dnaSpacing",
+          "type": "select",
+          "label": "Spacing",
+          "full": false,
+          "bind": { "key": "dna.spacing" },
+          "options": [
+            { "value": "airyRhythm", "label": "Airy Rhythm（大留白节奏）" },
+            { "value": "balancedGrid", "label": "Balanced Grid（均衡栅格）" }
+          ]
+        },
+        {
+          "id": "dnaColor",
+          "type": "select",
+          "label": "Color",
+          "full": false,
+          "bind": { "key": "dna.color" },
+          "options": [
+            { "value": "neutralInkAccent", "label": "Neutral Ink + 1 Accent（黑白灰 + 单点强调）" },
+            { "value": "darkLayeredAccent", "label": "Dark Layered + Accent（分层深色 + 单点强调）" }
+          ]
+        },
+        {
+          "id": "dnaShape",
+          "type": "select",
+          "label": "Shape",
+          "full": false,
+          "bind": { "key": "dna.shape" },
+          "options": [
+            { "value": "radiusSystem16", "label": "Radius System（圆角谱系 0/8/16）" },
+            { "value": "sharpEditorial", "label": "Sharp Editorial（偏锐利、分割明确）" }
+          ]
+        },
+        {
+          "id": "dnaMotion",
+          "type": "select",
+          "label": "Motion",
+          "full": false,
+          "bind": { "key": "dna.motion" },
+          "options": [
+            { "value": "subtleCubic", "label": "Subtle Cubic（克制动效 + 标准缓动）" },
+            { "value": "none", "label": "No Motion（几乎无动画）" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "output",
+      "title": "输出目标",
+      "fields": [
+        {
+          "id": "outputTargetSelect",
+          "type": "select",
+          "label": "Output Target",
+          "full": true,
+          "bind": { "key": "outputTarget" },
+          "options": [
+            { "value": "html-css", "label": "HTML/CSS（单文件）" },
+            { "value": "react-tailwind", "label": "React + Tailwind（组件）" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+

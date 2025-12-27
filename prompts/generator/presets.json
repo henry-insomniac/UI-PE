@@ -1,0 +1,263 @@
+{
+  "version": "1.0.0",
+  "presets": [
+    {
+      "id": "elevatedLanding",
+      "name": "Elevated Landing",
+      "subtitle": "排版对比 + 克制配色 + 大留白（接近你喜欢的 elevated 示例）",
+      "defaults": {
+        "pageType": "landing",
+        "outputTarget": "html-css",
+        "dna": {
+          "typography": "editorialContrast",
+          "spacing": "airyRhythm",
+          "color": "neutralInkAccent",
+          "shape": "radiusSystem16",
+          "motion": "subtleCubic"
+        }
+      },
+      "snippets": {
+        "base": "prompts/generator/snippets/base.md",
+        "pageTypes": {
+          "landing": "prompts/generator/snippets/pageType-landing.md",
+          "dashboard": "prompts/generator/snippets/pageType-dashboard.md"
+        },
+        "adapters": {
+          "html-css": "prompts/generator/snippets/adapter-html-css.md",
+          "react-tailwind": "prompts/generator/snippets/adapter-react-tailwind.md"
+        }
+      },
+      "dnaLibrary": {
+        "typography": {
+          "editorialContrast": {
+            "title": "Editorial Contrast",
+            "rules": [
+              "标题使用无衬线 Display 字体（粗、紧字距），在关键字上穿插斜体衬线（仅 10–20%）制造张力",
+              "标题字距建议 -0.03em 到 -0.05em，行高 0.95–1.05；正文行高 1.65–1.8",
+              "数字、指标等需要对齐的内容可用等宽字体，但不要滥用",
+              "尽量减少字体数量（最多 2 个家族），字重控制在 4 个以内"
+            ]
+          },
+          "cleanSans": {
+            "title": "Clean Sans",
+            "rules": [
+              "全站仅使用无衬线字体（Inter/Geist/DM Sans 风格），强调清爽与秩序",
+              "标题与正文通过字号阶梯和字重区分，不依赖装饰",
+              "行高：标题 1.05–1.2，正文 1.6–1.75",
+              "字距：标题轻微负字距（-0.01em 到 -0.03em），正文 0"
+            ]
+          }
+        },
+        "spacing": {
+          "airyRhythm": {
+            "title": "Airy Rhythm",
+            "rules": [
+              "区块间距 120–200px（根据屏幕宽度自适应），首屏上下留白更大",
+              "使用明确的 8/16/24/32/48/64/96/128 的间距刻度，并保持一致",
+              "信息密度偏低：每屏只讲 1 个观点，避免卡片堆叠",
+              "使用分割线与留白建立层次，而不是新增背景花纹"
+            ]
+          },
+          "balancedGrid": {
+            "title": "Balanced Grid",
+            "rules": [
+              "区块间距 80–120px，组件间距 24–48px，整体更均衡",
+              "栅格：12 栅格或 CSS Grid，内容区最大宽度 1200–1400px",
+              "适度信息密度：每屏 2–3 个模块，但保持一致的节奏",
+              "用明确的对齐关系保证高级感（标题/按钮/卡片对齐到同一垂直轴）"
+            ]
+          }
+        },
+        "color": {
+          "neutralInkAccent": {
+            "title": "Neutral Ink + 1 Accent",
+            "rules": [
+              "98% 使用黑白灰（纸感白或墨感黑），2% 使用单点强调色（例如紫 #8b5cf6）",
+              "避免大面积渐变背景；强调色只用于 CTA、关键数字、少量线条/分割",
+              "边框使用 rgba(255,255,255,0.06) 或 rgba(0,0,0,0.08) 级别的“几乎不可见”分割",
+              "不要使用高饱和背景色块来填充空白，留白本身就是设计"
+            ]
+          },
+          "darkLayeredAccent": {
+            "title": "Dark Layered + Accent",
+            "rules": [
+              "背景采用 4 层深色：#0c0c0f / #131318 / #1a1a21 / #22222b（建立层级）",
+              "文字使用高对比但不刺眼：主白 + 次灰（#e5e7eb/#9ca3af）",
+              "强调色保持克制（紫/蓝/青择一），用于状态与 CTA",
+              "边框一律用 rgba(255,255,255,0.06)（不要纯白线）"
+            ]
+          }
+        },
+        "shape": {
+          "radiusSystem16": {
+            "title": "Radius System (0/8/16)",
+            "rules": [
+              "统一圆角谱系：0px（分割/表格）、8px（小组件）、16px（卡片/容器）",
+              "按钮优先用 999px（胶囊）或 12px（圆角矩形），但全站保持一致",
+              "边框厚度统一 1px，阴影极克制（只在 hover 或浮层）",
+              "避免 24px+ 的过度圆角造成“可爱化”"
+            ]
+          },
+          "sharpEditorial": {
+            "title": "Sharp Editorial",
+            "rules": [
+              "边角偏锐利：容器圆角 8–12px 或更小，分割线更明确",
+              "大量使用细线分割与网格对齐，营造编辑设计感",
+              "按钮形态更硬朗（12px 圆角），避免全站胶囊化",
+              "减少阴影，更多依赖对比与排版秩序"
+            ]
+          }
+        },
+        "motion": {
+          "subtleCubic": {
+            "title": "Subtle Cubic",
+            "rules": [
+              "动效只做三类：hover、focus、进入（首屏/滚动）",
+              "统一缓动：cubic-bezier(0.4, 0, 0.2, 1)，时长 150–350ms",
+              "hover 只做 2–4px 位移或轻微亮度变化，不做大幅缩放与发光",
+              "避免滚动驱动的复杂动画（会显得模板化且影响性能）"
+            ]
+          },
+          "none": {
+            "title": "No Motion",
+            "rules": [
+              "不使用滚动动画与浮夸 hover，仅保留可访问性必须的 focus 样式",
+              "交互反馈用颜色/边框/下划线变化，避免位移与阴影",
+              "页面稳定、克制、偏严肃"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "dashboardDark",
+      "name": "Dashboard Dark",
+      "subtitle": "分层深色 + 数据密度 + 细边框（接近 dashboard-elevated 示例）",
+      "defaults": {
+        "pageType": "dashboard",
+        "outputTarget": "html-css",
+        "dna": {
+          "typography": "cleanSans",
+          "spacing": "balancedGrid",
+          "color": "darkLayeredAccent",
+          "shape": "radiusSystem16",
+          "motion": "subtleCubic"
+        }
+      },
+      "snippets": {
+        "base": "prompts/generator/snippets/base.md",
+        "pageTypes": {
+          "landing": "prompts/generator/snippets/pageType-landing.md",
+          "dashboard": "prompts/generator/snippets/pageType-dashboard.md"
+        },
+        "adapters": {
+          "html-css": "prompts/generator/snippets/adapter-html-css.md",
+          "react-tailwind": "prompts/generator/snippets/adapter-react-tailwind.md"
+        }
+      },
+      "dnaLibrary": {
+        "typography": {
+          "editorialContrast": {
+            "title": "Editorial Contrast",
+            "rules": [
+              "Dashboard 更建议无衬线为主；如果使用衬线，只用于页面标题的小比例强调",
+              "数字全部使用等宽字体（JetBrains Mono），并保持右对齐",
+              "标题与正文通过字重/字号阶梯区分，避免过度装饰",
+              "表格与卡片的文字层级要严格一致（同类同级）"
+            ]
+          },
+          "cleanSans": {
+            "title": "Clean Sans",
+            "rules": [
+              "全站无衬线字体（Inter/Geist），数字使用 JetBrains Mono",
+              "页面标题 24–32px，卡片标题 16–18px，表格 12–14px",
+              "信息密度较高但保持行高 1.5+，避免拥挤",
+              "颜色层级用于区分信息重要性（主白/次灰/弱灰）"
+            ]
+          }
+        },
+        "spacing": {
+          "airyRhythm": {
+            "title": "Airy Rhythm",
+            "rules": [
+              "Dashboard 不建议过大留白；如选择此项，需减少卡片数量并强化单屏叙事",
+              "区块间距保持 64–96px，卡片内 padding 提升至 28–32px",
+              "保持清晰分区：Overview / Charts / Table 三段",
+              "避免在同一屏堆 8+ 卡片"
+            ]
+          },
+          "balancedGrid": {
+            "title": "Balanced Grid",
+            "rules": [
+              "卡片间距 12–16px，区块间距 32–64px，整体节奏紧凑但不挤",
+              "网格：Stats 4 列、Charts 2 列、Table 1 列（自适应）",
+              "对齐优先：标题、操作按钮、表格列严格对齐",
+              "留白来自一致的 padding/gap，而不是随机 margin"
+            ]
+          }
+        },
+        "color": {
+          "neutralInkAccent": {
+            "title": "Neutral Ink + 1 Accent",
+            "rules": [
+              "若 Dashboard 使用浅色主题：白底 + 细灰边框 + 单点强调色（克制）",
+              "状态色遵循语义：success/warn/error，不要随意换色",
+              "避免大面积渐变；渐变只用于图表或极少数 KPI 胶囊",
+              "表格分割线要极淡"
+            ]
+          },
+          "darkLayeredAccent": {
+            "title": "Dark Layered + Accent",
+            "rules": [
+              "背景分层：#0c0c0f / #131318 / #1a1a21 / #22222b",
+              "边框：rgba(255,255,255,0.06)，hover 提升到 0.12",
+              "强调色：紫 #8b5cf6（或蓝/青择一），不超过 2% 面积",
+              "图表可用渐变，但避免发光过度"
+            ]
+          }
+        },
+        "shape": {
+          "radiusSystem16": {
+            "title": "Radius System (0/8/16)",
+            "rules": [
+              "卡片 16px，输入框/按钮 12px，小标签/徽标 999px",
+              "表格容器 16px，但行分割更克制",
+              "shadow 只用于浮层（菜单/弹窗），卡片默认无 shadow",
+              "按钮不要过度胶囊化，保持专业感"
+            ]
+          },
+          "sharpEditorial": {
+            "title": "Sharp Editorial",
+            "rules": [
+              "更硬朗：卡片 12px，强调分割线与网格",
+              "表格更编辑式（细线、紧凑排版、强对齐）",
+              "减少阴影与大圆角，强化专业感",
+              "操作按钮更精简（icon button + 菜单）"
+            ]
+          }
+        },
+        "motion": {
+          "subtleCubic": {
+            "title": "Subtle Cubic",
+            "rules": [
+              "hover：卡片轻微上浮 2px；边框变亮；背景层级上移",
+              "列表/表格：hover 仅背景变浅，不做位移",
+              "图表加载：淡入 250–400ms",
+              "统一缓动：cubic-bezier(0.4,0,0.2,1)"
+            ]
+          },
+          "none": {
+            "title": "No Motion",
+            "rules": [
+              "禁用位移动画；hover 只做颜色/边框变化",
+              "focus ring 必须保留",
+              "整体更稳重、偏企业后台"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
+
+
